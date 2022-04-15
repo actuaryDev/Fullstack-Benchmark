@@ -41,6 +41,12 @@ app.patch('/api/posts/:postId', function(req, res) {
     });
 });
 
+app.post('/api/posts', function(req, res) {
+  let newPost = new Post(req.body.data);
+  newPost.save()
+    .then(data => res.status(201).send(data))
+    .catch(err => res.status(500).send(err));
+});
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
