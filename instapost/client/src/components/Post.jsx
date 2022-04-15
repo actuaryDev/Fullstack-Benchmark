@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import moment from 'moment';
 
 class Post extends React.Component {
@@ -6,11 +7,13 @@ class Post extends React.Component {
     super(props);
     this.state = {
       body: props.posts.body,
-      showMaxChars: false
+      showMaxChars: false,
+      likes: props.posts.likes
     };
     this.toggle = this.toggle.bind(this);
     this.showChars = this.showChars.bind(this);
     this.multiPar = this.multiPar.bind(this);
+    this.incrementLikes = this.incrementLikes.bind(this);
   }
 
   toggle() {
@@ -29,6 +32,18 @@ class Post extends React.Component {
     let pSplit = postBody.split('\n');
     return pSplit;
   }
+
+  incrementLikes() {
+    axios.patch('/api/posts/' + this.props.posts._id)
+      .then(res => {
+        this.setState({likes: res.data.likes});
+      })
+      .catch(err => {
+        console.log('Client incrementLikes PATCH Failed.', err);
+        res.send(err);
+      });
+  }
+
 
   render() {
     return (
@@ -54,9 +69,9 @@ class Post extends React.Component {
           {this.state.showMaxChars ? 'Show LESS' : 'Show ALL'}
         </button>
         <div className='post__actions'>
-          <div className='post__likes'>Likes: {this.props.posts.likes}</div>
+          <div className='post__likes'>Likes: {this.state.likes}</div>
           <div className='post__buttons'>
-            <button>Like</button>
+            <button onClick={this.incrementLikes}>Like</button>
             <button>Comment</button>
           </div>
         </div>

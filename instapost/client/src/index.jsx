@@ -20,7 +20,6 @@ class App extends React.Component {
   getPosts() {
     axios.get('/api/posts')
       .then(data => {
-        console.log('Client GET Request Successful.');
         let posts = data.data;
         this.setState({posts});
       })
