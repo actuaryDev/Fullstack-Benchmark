@@ -30,7 +30,7 @@ You will create a full-stack application that implements several features for a 
 
 HOW TO START THIS APP
 
-- _[Modify this section to tell graders how to start your app]_
+- In Node Terminal, cd into /instapost and type `npm start`.
 
 **Commit frequently** with informative messages. While there are instructions to commit at the end of each step, these should not be your only commits.
 
